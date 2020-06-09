@@ -1,33 +1,86 @@
-a = [
-    [7,8,0,4,0,0,1,2,0],
-    [6,0,0,0,7,5,0,0,9],
-    [0,0,0,6,0,1,0,7,8],
-    [0,0,7,0,4,0,2,6,0],
-    [0,0,1,0,5,0,9,3,0],
-    [9,0,4,0,6,0,0,0,5],
-    [0,7,0,3,0,0,0,1,2],
-    [1,2,0,0,0,7,4,0,0],
-    [0,4,9,2,0,6,0,0,7]
-]
+board = [[7,8,0,4,0,0,1,2,0],
+         [6,0,0,0,7,5,0,0,9],
+         [0,0,0,6,0,1,0,7,8],
+         [0,0,7,0,4,0,2,6,0],
+         [0,0,1,0,5,0,9,3,0],
+         [9,0,4,0,6,0,0,0,5],
+         [0,7,0,3,0,0,0,1,2],
+         [1,2,0,0,0,7,4,0,0],
+         [0,4,9,2,0,6,0,0,7]]
 
-def make_board(a):
-    x=len(a)
-    for i in range(len(a)):
-        if i%3==0 and i!=0:
-            print("---"*x)
-        for j in range(len(a[i])):
-            if j%3==0 and j!=0:
-                print("|",end="")
-            if j==len(a[i])-1:
-                print(a[i][j])
+def solution(b):
+
+    #Base case for recursion.
+    position = empty(b)  
+    if not position:
+        return True
+    else:
+        row,col=position
+
+    for a in range(1,10):
+        if check(b, a, (row,col)):
+            b[row][col]=a
+
+            if solution(b):
+                return True
+
+            b[row][col]=0
+
+    return False
+
+
+def check(b, number, position):
+
+    
+    for x in range(len(b)):
+        if b[x][position[1]]==number and x!=position[0]:
+            return False 
+
+
+    for y in range(len(b[0])):
+        if b[position[0]][y]==number and y!=position[1]:
+            return False
+
+    #Checking entry in individual boxes.
+    row_check=position[0]//3
+    col_check=position[1]//3
+    for i in range(row_check*3, row_check*3+3):
+        for j in range(col_check*3, col_check*3+3):
+            if b[i][j]==number and (i,j)!=position:
+                return False
+
+    return True
+
+
+def sudoku_board(b):
+    #Function used to make a (9x9) sudoku board:
+
+    for x in range(len(b)):
+        if x%3==0 and x!=0:
+            print('- - - - - - - - - - -')
+
+        for y in range(len(b[0])):
+            if y%3==0 and y!=0:
+              print('|', end=' ')
+      
+            if y==len(b[0])-1:
+              print(b[x][y])
+      
             else:
-                print(a[i][j],end=" ")
-        
-def find_empty_box(a):
-    for i in range(len(a)):
-        for j in range(len(a[i])):
-            if a[i][j]==0:
-                return (i,j)
-            
+              print(b[x][y], end=' ')
+sudoku_board(board)
 
-print(make_board(a))
+
+def empty(b):
+    #Function used to find position of empty boxes on the sudoku board.
+    for row in range(len(b)):
+        for col in range(len(b[0])):
+            if b[row][col]==0:
+                return (row , col)
+
+    # If no empty boxes left:
+    return None
+
+
+solution(board)
+sudoku_board(board)
