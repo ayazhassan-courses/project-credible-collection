@@ -32,14 +32,18 @@ def solution(b):
 def check(b, number, position):
 
     
-    for x in range(len(b)):
-        if b[x][position[1]]==number and x!=position[0]:
+    for i in range(len(b)):
+        if b[i][position[1]]==number and i!=position[0]:
             return False 
 
 
-    for y in range(len(b[0])):
-        if b[position[0]][y]==number and y!=position[1]:
+    for j in range(len(b[0])):
+        if b[position[0]][j]==number and j!=position[1]:
             return False
+
+
+
+
 
     #Checking entry in individual boxes.
     row_check=position[0]//3
@@ -69,7 +73,7 @@ def sudoku_board(b):
             else:
               print(b[x][y], end=' ')
 sudoku_board(board)
-
+#in the code above the nested list is being converted into a sudoku board using for loops.
 
 def empty(b):
     #Function used to find position of empty boxes on the sudoku board.
@@ -84,3 +88,4 @@ def empty(b):
 
 solution(board)
 sudoku_board(board)
+#the above code will work at the backend and will make sue that the game is being solved correctly 
