@@ -116,7 +116,7 @@ def Solve(bo, i, j):
 
     return False
 
-bo=[[1,5,0,8,7,3,2,0,6], 
+bo_2=[[1,5,0,8,7,3,2,0,6], 
     [3,8,6,5,9,2,7,1,4], 
     [7,2,9,6,4,0,8,3,5], 
     [8,6,3,7,0,5,1,4,9], 
@@ -126,26 +126,47 @@ bo=[[1,5,0,8,7,3,2,0,6],
     [5,9,8,0,3,6,4,7,1], 
     [2,4,7,0,8,9,5,6,3]]
 
-sudoku_board(bo)
+bo_3=[ [ 3, 1, 6, 5, 7, 8, 4, 9, 2 ],
+         [ 5, 2, 9, 1, 3, 4, 7, 6, 8 ],
+         [ 4, 8, 7, 6, 2, 9, 5, 3, 1 ],
+         [ 2, 6, 3, 0, 1, 5, 9, 8, 7 ],
+         [ 9, 7, 4, 8, 6, 0, 1, 2, 5 ],
+         [ 8, 5, 1, 7, 9, 2, 6, 4, 3 ],
+         [ 1, 3, 8, 0, 4, 7, 2, 0, 6 ],
+         [ 6, 9, 2, 3, 5, 1, 8, 7, 4 ],
+         [ 7, 4, 5, 0, 8, 6, 3, 1, 0 ] ]
+
 print('____Solved-Board_____')
 st_2=time.time()
 Solve(bo, 0, 0)
 sudoku_board(bo)
 ed_2=time.time()
 rt_2=ed_2-st_2
-print("--------------------------RUNTIME for naive approach---------------------------------")
+print()
+#########################
+sudoku_board(bo_3)
+st=time.time()
+Solve(bo_3,0,0)
+print('____Solved-Board_____')
+sudoku_board(bo_3)
+end=time.time()
+x=end-st
+print()
+print("--------------------------RUNTIME for naive approach with first board---------------------------------")
 print(rt_2)
 t = rt_2 //16
 
 print()
-print('2nd Algo')
+
+print("--------------------------RUNTIME for naive approach with second board---------------------------------")
+print(x)
+y = x//16
+
 print()
 
 
 
-
-
-
+# Backtracking Algorithm to solve a sudoku board:
 
 board = [[7,8,0,4,0,0,1,2,0],
          [6,0,0,0,7,5,0,0,9],
@@ -237,8 +258,51 @@ def empty(b):
     return None
 
 
+sudoku_board2(board)
+print('____Solved-Board_____')
+st_11=time.time()
 solution(board)
-sudoku_board(board)
+sudoku_board2(board)
+print()
+ed_11=time.time()
+rt_11=ed_11-st_11
+print("------------------------RUNTIME for backtracking approach with first board----------------------")
+print(rt_11)
+print()
+print()
+sudoku_board2(bo_3)
+print('____Solved-Board_____')
+st_12=time.time()
+solution(bo_3)
+sudoku_board2(bo_3)
+print()
+ed_12=time.time()
+rt_12=ed_12-st_12
+print("------------------------RUNTIME for backtracking approach with second board----------------------")
+print(rt_12)
+
 #the above code will work at the backend and will make sue that the game is being solved correctly
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#---------plotting graph for the results----------------------------------:
+
+#Note:------------------------------------------------------------------------------------------------------
+#The naive approach is very inefficient and time consuming as compared to the backtracking approach/algorithm.
+#The difference between the runtime of both algorithms is so significant that the bar plot of backtracking 
+#is not visible on the graph. Hence, for plotting purposes, a fraction i.e. 1/16th the value of the runtime of 
+#the naive approach is taken and plotted with runtime of backtracking. At the time of code, runtime of naive 
+#aplgorithm was nearly 98 seconds while runtime for bactracking was around 0.02 seconds for the same sudoku board.
+#-----------------------------------------------------------------------------------------------------------
+
+#n.a = naive approach
+#b.t = bactracking
+
+graph_x=["n.a (1/16th time)(bo1)","b.t(bo1)","n.a (1/16th time)(bo2)","b.t(bo2)"]
+graph_y=(t,rt_11,y,rt_12)
+plt.title("Runtime for algorithms used to solve sudoku")
+plt.bar(graph_x,graph_y,color="red")
+plt.show()
+
 
 
